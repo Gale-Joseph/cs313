@@ -1,0 +1,19 @@
+p {
+    color: green;
+}
+
+div:hover {
+    font-weight: bold;
+}
+
+textarea {
+    display: block;
+}
+
+.col-sm {
+    background-color: red;
+    border: 1px solid yellow;
+}
+.container {
+    margin-bottom: 2em;
+}
