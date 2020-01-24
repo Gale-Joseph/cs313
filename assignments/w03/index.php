@@ -47,6 +47,11 @@ switch($action){
     case 'resetSession':
         session_destroy();
         session_start();
+        include 'view/cart.php';
+    break;
+    case 'startNew':
+        session_destroy();
+        session_start();
         include 'view/home.php';
     break;
     default:

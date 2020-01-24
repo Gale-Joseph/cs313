@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cart</title>
-</head>
+<?php include 'common/head.php';?>
 <body>
+<div class="wrapper">    
+    <?php include 'common/header.php';?>
     
     <h2>Shopping Cart:</h2>
-    <form action="/cs313/assignments/w03/index.php" method="post">
-    <?php         
-        if(isset($_SESSION['cart'])){
-            $cart = $_SESSION['cart'];
-            foreach($cart as $key=>$item){
-                //print item, retain key for removal
-                echo $key . " ". $item . "<button type = 'submit' name='item' value=$key>Remove Item</button>"."<br>";
-            }
-        } 
-    ?>
-    <input type="hidden" name="action" value="removeItem">
-    </form>
-    <a href="/cs313/assignments/w03/index.php?action=home">Browse more items</a>
-    <a href="/cs313/assignments/w03/index.php?action=checkout">Proceed to Checkout</a>
+    <div class="cart">
+        <form action="index.php" method="post">
+            <?php         
+                if(isset($_SESSION['cart'])){
+                    $cart = $_SESSION['cart'];
+                    foreach($cart as $key=>$item){
+                        //print item, retain key for removal
+                        echo $item . "<button type = 'submit' name='item' value=$key>Remove Item</button>"."<br>";
+                    }
+                } 
+            ?>
+        <input type="hidden" name="action" value="removeItem">
+        </form>
+        <form action="index.php" method="post">
+            <button type="submit" name="action" value="resetSession">Empty Cart</button>
+            <button type="submit" name="action" value="checkout">Check out</button>
+    </form> 
+    </div>
+    <div class="subform">
+    <h2><a href="index.php?action=home">Back to shopping</a></h2>
+    
+    </div>
+    <?php include 'common/footer.php';?>
+    </div>
+    
 </body>
 </html>

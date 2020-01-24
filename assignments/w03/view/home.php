@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-</head>
+<?php include 'common/head.php';?>
 <body>
-    <h1>Main Page</h1>
-    <!--all items for sale go here-->
-    <form action="/cs313/assignments/w03/index.php" method="post">
-
-        <div>
-        <button type="submit" name="item" value="apples">Add apples</button>
-        <button type="submit" name="item" value="oranges">Add oranges</button>
-        </div>
-
-        <input type="hidden" name="action" value="addItem">
+    <div class="wrapper">
+        <?php include 'common/header.php';?>  
         
-    </form>
-
-    <!--Reset session for testing -->
-
-    <form action="/cs313/assignments/w03/index.php" method="post">
-        <input type="submit" name="action" value="resetSession">    
-    </form> 
-
-    <!--Navigate to Shopping Cart-->
-    <a href="/cs313/assignments/w03/index.php?action=viewItems">View Shopping Cart</a>
+        <div class="shopSection">
+            <!--all items for sale go here-->
+            <form action="index.php" method="post">
+                <div class="product">
+                    <div class="fruitpic"><img src="images/apples.jpg"></div>
+                    <button type="submit" name="item" value="apples">Add apples</button>
+                </div>
+                <div class="product">
+                    <div class="fruitpic"><img src="images/oranges.jpg"></div>
+                    <button type="submit" name="item" value="oranges">Add oranges</button>
+                </div>
+                <div class="product">
+                    <div class="fruitpic"><img src="images/bananas.jpg"></div>
+                    <button type="submit" name="item" value="bananas">Add bananas</button>
+                </div>
+                <input type="hidden" name="action" value="addItem">                
+            </form>
+        </div><!--close shopSection-->
+        <?php include 'common/footer.php';?>
+    </div><!--close wrapper-->
 </body>
 </html>

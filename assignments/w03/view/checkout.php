@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cart</title>
-</head>
+<?php include 'common/head.php';?>
 <body>
-    <h1>Checkout page</h1>
+<div class="wrapper">
+    <?php include 'common/header.php';?>
 
     
     
     <h2>Shipping Address</h2>
-    <form action="/cs313/assignments/w03/index.php" method="post">
+    <form id = "shippingForm" action="index.php" method="post">
         <label for="address">Street Address 1</label><br>
         <input type="text" name="address1"><br>
         <label for="address">Street Address 2</label><br>
@@ -27,7 +23,14 @@
 
     
     </form>
-    <a href="/cs313/assignments/w03/index.php?action=home">Go home</a>
-    <a href="/cs313/assignments/w03/index.php?action=viewItems">Return to cart</a>
+    <div class="subform">
+    <h2><a href="index.php?action=viewItems">Return to cart</a></h2>
+    <h2><a href="index.php?action=home">Keep shopping</a></h2>
+       
+        
+    </div>
+    
+    <?php include 'common/footer.php';?>
+</div>
 </body>
 </html>

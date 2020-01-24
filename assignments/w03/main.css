@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Raleway&display=swap');
+h1 {
+    color: Green;
+    font-family: 'Pacifico', cursive;
+}
+
+h2, h3{
+    font-family: 'Raleway', sans-serif;
+}
+
+p{
+    font-family: 'Raleway', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    color: brown;
+    
+}
+a:visited{
+    color: brown;
+}
+
+a:hover{
+    color: green;
+}
+
+ul {
+    list-style-type: none;
+}
+
+h2  {
+    margin-left: 1em;
+}
+.confirmForm p{
+    margin-left: 1.75em;
+}
+
+.confirmForm ul li {
+    margin-bottom: .25em;
+}
+
+.itemsPurchased,li {
+    font-size: 1.25em;
+    margin: 0;
+}
+
+#shippingForm input{
+    margin-bottom: 1em;
+}
+
+#shippingForm label{
+    font-family: 'Raleway', sans-serif;
+    padding: .25em;
+}
+
+footer{
+    font-family: 'Raleway', sans-serif;
+    padding: 1em;
+}
+
+body {
+    background-image: url("images/salad.jpg");
+}
+
+.wrapper {    
+    margin: auto;
+    width: 80%;
+    background-color: yellow;
+
+}
+
+header {
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+
+.shopSection{
+    width: 50%;
+    margin: auto;
+   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product{
+    justify-content: center;
+    text-align: center;
+    background-color:#E0E3B6;
+    width: 90%;
+    height: 100px;   
+    display: flex;
+    margin: 1em;
+}
+
+.fruitpic {
+    width: 150px;
+}
+
+.fruitpic img{
+    width: 150px;
+}
+
+button {
+    margin: .5em;
+    height: 40px;
+    font-family: 'Raleway', sans-serif;
+}
+
+form{
+    padding: 1em;
+    background-color: #B7CC8B;
+    width: 90%;
+    margin: auto;
+}
+.cart{
+    padding: 1em;
+    margin: auto;
+    width: 80%;
+}
+.subform{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
