@@ -1,0 +1,1 @@
+<footer><?php echo "Updated " . date("d M Y"); ?></footer>
