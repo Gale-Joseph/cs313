@@ -21,7 +21,7 @@
     <div class="pimg1">        
         <div class="ptext">
             <div class="mainName">
-                <h2><a name="home">Joseph Gale</a></h2>
+                <h2><a name="home">Joseph J. Gale</a></h2>
             </div>
             <div class="location">
                 <h3>Des Moines, IA</h3>
@@ -41,11 +41,7 @@
         </div>
     </div>
 
-    <div class="s2">
-        <div class="s2col">
-            <p>Coming soon...</p>
-        </div>
-    </div>
+
     
     <div class="s2">
         <div class="s2col">
@@ -58,6 +54,20 @@
             <p>Project Link</p>
         </div>
     </div>
+    
+        <div class="s2">
+        <div class="s2col">
+            <p>Jan 26, 2020</p>
+        </div>
+        <div class="s2col">
+           <p>Shopping Cart</p>
+        </div>
+        <div class="s2col">
+            <p><a href="https://protected-sierra-04923.herokuapp.com">Link to Shopping Cart</a></p>
+        </div>
+    </div>
+    
+    <
 
     <div class="pimg2">
         <div class="ptext">
@@ -117,7 +127,7 @@
     <div class="pimg3">
         <div class="ptext">
         <div class="location">
-            <h3>"Oh the places you'll go.</h3>
+            <h3>"Oh the places you'll go."</h3>
             <h3>~Dr. Suess</h3>
         </div>
     </div>
