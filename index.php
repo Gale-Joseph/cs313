@@ -1,21 +1,34 @@
 <?php 
+//main controller page
 
+//create a session
+session_start();
 
-try{
-  //this information comes from settings of database
-  $user = 'afcznoceukzzju';
-  $password='449c32a4d853e16e1a2a2af197b9ec5b9304fbb3c170ad009d55b5e3459afd3a';
-  $host = 'ec2-52-22-111-202.compute-1.amazonaws.com';
-  $dbname='d1ali0b11dpglf';
+//get database connection file
+require_once 'library/connections.php';
+require_once 'model/portfolio-model.php';
+require_once 'library/functions.php';
 
-  $db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-  //sets $db to raise an exception, not necessary for connection issues in previous statement
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  echo 'Connection made!!';
+//use filter_input() to weed out malicious code
+$action = filter_input(INPUT_POST, 'action');
+
+//check POST/GET objects for key value that == 'action'
+if($action==NULL){ 
+  $action=filter_input(INPUT_GET,'action');
+  if($action==NULL){
+      $action = 'home';
+  }
 }
-catch(PDOException $ex){
-  echo 'Error!: '. $ex->getMessage();
-  die();
+
+
+switch($action){
+  case 'home':
+      $titleTag = "Home";
+      include 'view/home.php';
+      break;
+  default:
+       $titleTag = "Home";
+      include 'view/home.php';
 }
 
   ?>
