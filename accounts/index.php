@@ -1,10 +1,12 @@
 <?php
+//accounts controller
+
 //create a session
 session_start();
 
 //get database connection file
 require_once '../library/connections.php';
-require_once '../model/portfolio-model.php';
+require_once '../model/accounts-model.php';
 require_once '../library/functions.php';
 
 //use filter_input() to weed out malicious code
@@ -20,12 +22,24 @@ if($action==NULL){
 
 
 switch($action){
-  case 'getPort':
-      $titleTag = "Portfolio";
-      $_SESSION['portData'] = getPort();
-      include '../view/portfolio.php';
+    case 'getUserInfo':
+      $titleTag = "Account";
+      $_SESSION['userInfo'] = getUserInfo();
+      include '../view/admin.php';
       break;
-  default:
+
+    case 'viewLogin':
+    $titleTag = "Login";
+    include '../view/login.php';
+    break;
+
+    case 'login':
+        $titleTag = "Home";
+        //if using include, errors appear on homepage    
+        header('Location: ../index.php');    
+        break;
+
+    default:
        $titleTag = "Home";
       include '../view/home.php';
 }

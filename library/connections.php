@@ -11,7 +11,6 @@ function connectdb(){
         $db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
         //sets $db to raise an exception, not necessary for connection issues in previous statement
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo 'Connection made!!';
         return $db;
       }
       catch(PDOException $ex){        

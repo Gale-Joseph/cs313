@@ -4,6 +4,9 @@
     <?php include '../common/head.php';?>
 </head>
 <body>
+<header>
+    <?php include '../common/header.php';?>
+</header>
     <table>
         <tr>
             <th>Ticker</th>
@@ -24,9 +27,6 @@
             <td><?php echo $_SESSION['portData']['profit']?></td>
         </tr>
     </table>
-<?php
-   echo $_SESSION['portData']['ticker'];
-?>
     
 </body>
 

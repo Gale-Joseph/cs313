@@ -6,7 +6,7 @@ session_start();
 
 //get database connection file
 require_once 'library/connections.php';
-require_once 'model/portfolio-model.php';
+require_once 'model/transactions-model.php';
 require_once 'library/functions.php';
 
 //use filter_input() to weed out malicious code
@@ -23,12 +23,12 @@ if($action==NULL){
 
 switch($action){
   case 'home':
-      $titleTag = "Home";
-      include 'view/home.php';
-      break;
+    $titleTag = "Home";
+    include 'view/home.php';
+    break;
   default:
-       $titleTag = "Home";
-      include 'view/home.php';
+      $titleTag = "home";
+    include 'view/home.php';
 }
 
   ?>

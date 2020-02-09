@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stockproject/css/main.css">
+    <link rel="stylesheet" href="../css/main.css">
     <title>
         <?php if(isset($titleTag)){ 
             echo $titleTag ." | Gale, Inc.";
@@ -12,8 +10,12 @@
             }
         ?>               
     </title>
+    <?php
+    //this prevents the form from resubmitting when hitting back button
+    /*https://stackoverflow.com/questions/15226744/prevent-form-resubmission-upon-hitting-back-button*/
+    header("Cache-Control: no cache");
+
+    //this code was also included in stack overflow but created error
+    //session_cache_limiter("private_no_expire");
+    ?>
 </head>
-<body>
-    
-</body>
-</html>
