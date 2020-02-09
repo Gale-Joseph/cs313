@@ -1,4 +1,51 @@
-/* Add a black background color to the top navigation */
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro&display=swap');
+
+h1{
+    font-family: 'Permanent Marker', cursive;
+}
+
+body{
+    font-family: "Lato",sans-serif;
+}
+
+/* ******************* Forms ******************* */
+
+.formBlock{
+    margin: 0 auto;
+    margin-top: 1em;
+}
+.formBlock input{
+    width: 15em;
+    margin: .10em;
+}
+
+input {
+    margin-top: .10em;
+    margin-bottom: .25em;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+    
+    
+}
+table, th, td{
+    border: 1px solid black;
+}
+
+th, td{
+    padding: 1em;
+}
+
+.userInfo{
+    list-style-type: none;
+}
+
+/* ******************* Tables ******************* */
+
+/* ******************* Navigation Bar ******************* */
 .topnav {
     background-color: #333;
     overflow: hidden;
