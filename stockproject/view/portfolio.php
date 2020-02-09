@@ -7,6 +7,12 @@
 <header>
     <?php include '../common/header.php';?>
 </header>
+
+<div class="pageIntro">
+    <h1>Portfolio</h1>
+    <p>This page will display the complete, active portfolio of the user</p>
+    </p>
+</div>
     <table>
         <tr>
             <th>Ticker</th>
@@ -27,6 +33,8 @@
             <td><?php echo $_SESSION['portData']['profit']?></td>
         </tr>
     </table>
+
+    <?php include '../common/forms.php';?>
     
 </body>
 

@@ -25,10 +25,13 @@
 <div class="topnav">
   <a class="active" href='index.php'>Home</a>
 </div> 
-
-<?php
-$myconnect = connectdb();
-?>
+<div class="pageIntro">
+<h1>Main Interface</h1>
+<p>Welcome to the first version of my stock portfolio app.
+    Each of the following buttons reads data from the Postgres Database and 
+    displays some dummy information. 
+</p>
+</div>
 
 <form action="transactions/index.php" method="post">
     <input type="hidden" name="action" value="getPort">
