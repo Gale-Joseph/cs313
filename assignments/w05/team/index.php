@@ -55,8 +55,8 @@ while($row = $statement->fetch(PDO::FETCH_ASSOC)){
 /*using a form to search database*/
 ?>
 <form method="post"><!--Tells us what kind of an array the form data will be put in-->
-<input type = "text" name = "bookName"><!--identifies a key name of 'bookname'-->
-<input type="submit" name = "submit"><!--identifies a key name of 'submit'-->
+    <input type = "text" name = "bookName"><!--identifies a key name of 'bookname'-->
+    <input type="submit" name = "submit"><!--identifies a key name of 'submit'-->
 </form>
 <?php
 /*check to make sure $_POST is filled*/
