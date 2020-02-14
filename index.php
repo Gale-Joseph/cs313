@@ -1,5 +1,5 @@
 <?php 
-//main controller page
+// main controller page
 
 //create a session
 session_start();
