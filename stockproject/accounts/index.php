@@ -33,10 +33,33 @@ switch($action){
     include '../view/login.php';
     break;
 
-    case 'login':
-        $titleTag = "Home";
+    case 'login':        
+        //1. Collect and filter information
+        $email = filter_input(INPUT_POST, 'emailAddress', FILTER_SANITIZE_EMAIL);
+        $password =filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+        //2. Check for missing data
+        if (empty($email) || empty($password)) {
+          $message = '<p class="notice">Please provide a valid email address and password.</p>';
+          include '../view/login.php';
+          exit; 
+         }
+         //3.Check against database
+         $clientData = getClient($email);
+         if($clientData==null||$clientData['password']!=$password){
+           $message = '<p class="notice">Email or Password is wrong</p>';
+          }else{
+          $_SESSION['firstname']=$clientData['firstname'];
+          $message = "<p class='notice'>Welcome, $clientData[firstname]";
+         }
+        
+
+        //Go to homepage or redirect to login
+        //set session variable with firstname
+
+
         //if using include, errors appear on homepage    
-        header('Location: ../index.php');    
+        include '../view/login.php';   
         break;
 
     default:

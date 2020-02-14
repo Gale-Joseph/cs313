@@ -22,6 +22,7 @@
 
 echo '<h1>Scripture Resources</h1>';
 
+//create a $db connection variable with try catch connecting to scriptures
 try{
     $user = 'postgres';
     $password='014722';
@@ -72,7 +73,7 @@ if(isset($_POST['submit'])){
         $content = $row['content'];
         $id = $row['id'];
     
-        // echo "<p><strong>$book $chapter:$verse</strong> - \"$content\"<p>"; //show references with text
+        // print out faith, sacrifice, charity as options on form
         echo "<p><strong>$book $chapter:$verse</strong> - <a href='details.php?action=$id'>Link to text</a><p>"; //implicity create $_GET[] key-value pair
     }
 }

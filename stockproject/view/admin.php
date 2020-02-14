@@ -18,7 +18,6 @@
         <li>Email: <?php echo $_SESSION['userInfo']['email']?></li>       
     </ul>
 
-    <?php include '../common/forms.php';?> 
 </body>
 
 <footer><?php include '../common/footer.php'?></footer>

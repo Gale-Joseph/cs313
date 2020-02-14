@@ -11,6 +11,8 @@ body{
 
 /* ******************* Forms ******************* */
 
+
+
 .formBlock{
     margin: 0 auto;
     margin-top: 1em;
@@ -50,6 +52,17 @@ th, td{
     background-color: #333;
     overflow: hidden;
   }
+
+.topnav form{
+    /*display: inline-block;*/
+    float: left;
+}
+
+.topnav input{
+    height: 3.2em;
+    
+}
+
   
   /* Style the links inside the navigation bar */
   .topnav a {
@@ -71,4 +84,14 @@ th, td{
   .topnav a.active {
     background-color: rgb(46, 147, 194);
     color: white;
+  }
+
+  /* ******************* Other Divs ******************* */
+  .stockSearch,.forms{      
+      padding: 1em;
+  }
+  .stockSearch p{
+      margin: 0;
+      margin-bottom: 1em;
+      
   }

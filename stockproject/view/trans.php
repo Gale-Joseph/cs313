@@ -23,16 +23,19 @@
             <th>Stock Total</th>
             <th>Deposit</th>
         </tr>
-        <tr>
-            <td><?php echo $_SESSION['transData']['date']?></td>
-            <td><?php echo $_SESSION['transData']['ticker']?></td>
-            <td><?php echo $_SESSION['transData']['price']?></td>
-            <td><?php echo $_SESSION['transData']['shares']?></td>
-            <td><?php echo $_SESSION['transData']['stocktotal']?></td>
-            <td><?php echo $_SESSION['transData']['deposittotal']?></td>
-        </tr>
+        <?php
+        while($row=$statement->fetch(PDO::FETCH_BOTH)){
+            echo    "<tr>" 
+                    . "<td>". "$row[date]</td>"
+                    . "<td>". "$row[ticker]</td>"
+                    . "<td>". "$row[price]</td>"
+                    . "<td>". "$row[shares]</td>"
+                    . "<td>". "$row[stocktotal]</td>"
+                    . "<td>". "$row[deposittotal]</td></tr>";
+        }
+        ?>
     </table>
-    <?php include '../common/forms.php';?>
+
 </body>
 <footer><?php include '../common/footer.php'?></footer>
 </html>

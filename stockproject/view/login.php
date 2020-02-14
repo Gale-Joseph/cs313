@@ -12,8 +12,7 @@
 
 <div class="pageIntro">
         <h1>Login</h1>
-        <p>This page will accept credentials to start a session with a user
-        </p>
+        <?php if(isset($message)){echo$message;};?>
     </div>
 <form action="../accounts/index.php" method="post" id="loginForm">
    
@@ -25,7 +24,6 @@
     <input type ="submit" name="submit" value="Login">
 </form>
 
-<?php include '../common/forms.php';?>
 </body>
 <footer><?php include '../common/footer.php'?></footer>
 </html>

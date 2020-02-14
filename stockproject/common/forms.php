@@ -1,8 +1,4 @@
 <div class="formBlock">
-<form action="../transactions/index.php" method="post">
-    <input type="hidden" name="action" value="getPort">
-    <input type ="submit" name="submit" value="See Portfolio">
-</form>
 <form action="../accounts/index.php" method="post">
     <input type="hidden" name="action" value="getUserInfo">
     <input type ="submit" name="submit" value="User Account">
