@@ -61,6 +61,24 @@ switch($action){
         //if using include, errors appear on homepage    
         include '../view/login.php';   
         break;
+    case 'updateUser':
+      //put input into variables
+        $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
+        $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $password =filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+        if(empty($firstname)||empty($lastname)||empty($email)||empty($password)){
+          $message = '<p class="notice">You must fill in all fields to update the user</p>';
+          include '../view/admin.php';
+          exit; 
+        }else{
+          updateUser($firstname,$lastname,$email,$password);
+          $_SESSION['userInfo'] = getUserInfo();
+          $message = '<p class="notice">User information updated</p>';
+          include '../view/admin.php';
+          exit;
+        }
 
     default:
        $titleTag = "Home";

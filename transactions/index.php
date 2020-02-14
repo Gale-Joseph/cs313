@@ -7,6 +7,7 @@ session_start();
 require_once '../library/connections.php';
 require_once '../model/transactions-model.php';
 require_once '../library/functions.php';
+require_once '../model/accounts-model.php';
 
 //use filter_input() to weed out malicious code
 $action = filter_input(INPUT_POST, 'action');
@@ -39,6 +40,25 @@ switch($action){
     //do fetch on view
     include '../view/trans.php';
     break;
+
+    case 'addfunds':
+      $db = connectdb();
+      $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT);
+      addFunds($amount);
+      //update session info
+      $_SESSION['userInfo'] = getUserInfo();
+      $date = date("Y-m-d");
+      
+      //add to trans table..this code is temporary
+      $sql3 = "INSERT INTO trans(date,deposittotal) 
+        VALUES('$date','$amount')";
+      $stmt3 = $db->prepare($sql3);
+      $stmt3->execute();
+
+      //add message and return to admin page
+      $message = '<p class="notice">Funds added</p>';
+      include '../view/admin.php';
+      exit;
 
   default:
        $titleTag = "Home";
