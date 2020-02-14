@@ -41,6 +41,7 @@ function addFunds($amount){
     $sql = "UPDATE public.user SET tradeacctamount='$newAmount' WHERE id=1";
     $stmt= $db->prepare($sql);
     $stmt->execute();   
+    //add the transaction to the transaction table
     
 
 }
