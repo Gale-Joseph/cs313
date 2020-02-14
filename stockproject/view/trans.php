@@ -9,10 +9,7 @@
 </header>
     <div class="pageIntro">
         <h1>Transaction List</h1>
-        <p>This page will display all the transactions of the user, including
-            deposits/withdrawls to and from the brockerage account, as well 
-            as sales and purchases of stocks.
-        </p>
+        
     </div>
     <table>
         <tr>

@@ -4,7 +4,7 @@
 //get account info based on default user
 function getUserInfo(){
     $db = connectdb();
-    $sql = 'SELECT firstname, lastname, email FROM public.user
+    $sql = 'SELECT firstname, lastname, email, tradeacctamount FROM public.user
     WHERE id = 1';
     $stmt= $db->prepare($sql);
     $stmt->execute();
@@ -24,4 +24,16 @@ function getClient($clientEmail){
     $stmt->closeCursor();
     return $clientData;
    }
+function updateUser($firstname,$lastname,$email,$password){
+    $db = connectdb();
+    $sql = 'UPDATE public.user SET firstname= :firstname, lastname= :lastname, 
+            email= :email, password= :password WHERE id = 1';
+    $stmt= $db->prepare($sql);
+    $stmt->bindValue(':firstname', $firstname, PDO::PARAM_STR);
+    $stmt->bindValue(':lastname', $lastname, PDO::PARAM_STR);
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $stmt->bindValue(':password', $password, PDO::PARAM_STR);
+    $stmt->execute();
+
+}
 ?>

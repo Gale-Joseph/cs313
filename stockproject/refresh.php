@@ -10,11 +10,13 @@ try{
     echo "there was an error starting out";
     exit;
 }
+    echo "<table><tr><th>Ticker</th><th>Date</th><th>Price</th><th>Shares</th></tr>";
     while($row = $results->fetch(PDO::FETCH_ASSOC)){
-        $ticker = $row['ticker'];
-        $buydate = $row['buydate'];
-        $buyprice = $row['buyprice'];
-        $shares = $row['shares'];
-        echo "<p>$ticker  $buydate  $buyprice  $shares</p>";
-    }
+        echo    "<tr>" 
+        . "<td>". "$row[ticker]</td>"
+        . "<td>". "$row[buydate]</td>"
+        . "<td>". "$row[buyprice]</td>"
+        . "<td>". "$row[shares]</td>";
+}
+    echo"</table>";
 ?>

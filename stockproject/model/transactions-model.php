@@ -27,4 +27,22 @@ function getTrans(){
     $stmt->closeCursor();
     return $transData;
 }
+
+function addFunds($amount){
+    $db = connectdb();
+    $sql = 'SELECT tradeacctamount FROM public.user WHERE id=1';
+    //get funds
+    $stmt= $db->prepare($sql);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $originalAmount = $row['tradeacctamount'];
+    //add funds to original amount and insert
+    $newAmount = $originalAmount + $amount;
+    $sql = "UPDATE public.user SET tradeacctamount='$newAmount' WHERE id=1";
+    $stmt= $db->prepare($sql);
+    $stmt->execute();   
+    //add the transaction to the transaction table
+    
+
+}
 ?>
