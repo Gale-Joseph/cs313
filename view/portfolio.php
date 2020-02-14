@@ -34,7 +34,7 @@
         </tr>
     </table>
 
-    <?php include '../common/forms.php';?>
+
     
 </body>
 

@@ -31,12 +31,20 @@ switch($action){
     //directed from homepage to see full transaction history
   case 'getTrans':
     $titleTag = "Transactions";
-    $_SESSION['transData'] = getTrans();
+    //get all transactions in an array for looping/display
+    $db = connectdb();
+    $sql = "SELECT * FROM trans";
+    $statement = $db->prepare($sql);
+    $statement ->execute();
+    //do fetch on view
     include '../view/trans.php';
     break;
 
   default:
        $titleTag = "Home";
+       $db = connectdb();
+       $statement = $db->prepare('SELECT * FROM portfolio');
+       $statement->execute();
       include '../view/home.php';
 }
 
