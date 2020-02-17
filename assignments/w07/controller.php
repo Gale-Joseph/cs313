@@ -40,16 +40,31 @@ if($statement->execute()){
     echo "Something went wrong. Please try again.<br>";
 }
 
-//login procedure
+//################login procedure####################
 //get password from user based on username
 $loginname = filter_var($_POST['loginname'], FILTER_SANITIZE_STRING);
 $loginpassword = filter_var($_POST['loginpassword'],FILTER_SANITIZE_STRING);
+// $loginpassword = password_hash($loginpassword,PASSWORD_DEFAULT);
 
+if($loginname || $loginpassword){
+    header("Location: welcome.php");
+}
+//retrive the hashed password
 $statement = $db->prepare("SELECT password FROM 
     userinfo WHERE username='$loginname'");
 $row = $statement->fetch(PDO::FETCH_ASSOC);
-password_verify($)
 
+if(password_verify($loginpassword,$row['password'])){
+    $var1 = print_r($_POST);
+    $var2 = print_r($row);
+    include "welcome.php";
+    // header("Location: welcome.php");
+} else {
+    $message = "something went wrong";
+    $var1 = print_r($_POST);
+    $var2 = print_r($row);
+    include 'welcome.php';
+}
 
 
 ?>

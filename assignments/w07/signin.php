@@ -7,7 +7,10 @@
 </head>
 <body>
 <h1>Login </h1>
-<form action='controller.php' method='post'>
+<?php if(isset($message)){echo $message;}?>
+
+
+<form action='controller2.php' method='post'>
 <label for="loginname">Username</label>  
     <input type  = "text" name = "loginname" id = "loginname">
 <label for ="password">Password</label>
