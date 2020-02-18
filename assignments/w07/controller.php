@@ -1,4 +1,6 @@
-<?php 
+<?php
+//this page handles the sign up
+session_start();
 //database connection
 $user = 'postgres';
 $password = '014722';
@@ -22,6 +24,21 @@ try{
 //remove illegal characters
 $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
 $password = filter_var($_POST['password'],FILTER_SANITIZE_STRING);
+$password2 = filter_var($_POST['password2'],FILTER_SANITIZE_STRING);
+
+//make sure passwords have at least 7 characters and 1 number
+if(!preg_match('/^(?=.*\d){7,}/',$password)){
+    $validation = "Password have at least 7 characters and 1 number";
+    include "index.php";
+    exit;
+}
+
+//make sure that passwords match
+if($password != $password2){
+    $validation = "Passwords do not match";
+    include "index.php";
+    exit;
+}
 
 //hash password
 $pwhash = password_hash($password,PASSWORD_DEFAULT);
@@ -39,32 +56,4 @@ if($statement->execute()){
 } else {
     echo "Something went wrong. Please try again.<br>";
 }
-
-//################login procedure####################
-//get password from user based on username
-$loginname = filter_var($_POST['loginname'], FILTER_SANITIZE_STRING);
-$loginpassword = filter_var($_POST['loginpassword'],FILTER_SANITIZE_STRING);
-// $loginpassword = password_hash($loginpassword,PASSWORD_DEFAULT);
-
-if($loginname || $loginpassword){
-    header("Location: welcome.php");
-}
-//retrive the hashed password
-$statement = $db->prepare("SELECT password FROM 
-    userinfo WHERE username='$loginname'");
-$row = $statement->fetch(PDO::FETCH_ASSOC);
-
-if(password_verify($loginpassword,$row['password'])){
-    $var1 = print_r($_POST);
-    $var2 = print_r($row);
-    include "welcome.php";
-    // header("Location: welcome.php");
-} else {
-    $message = "something went wrong";
-    $var1 = print_r($_POST);
-    $var2 = print_r($row);
-    include 'welcome.php';
-}
-
-
 ?>

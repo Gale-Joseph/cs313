@@ -1,4 +1,5 @@
 <?php
+//this page handles the login
 session_start();
 //database connection
 $user = 'postgres';
@@ -21,7 +22,10 @@ try{
 //get password from user based on username
 $loginname = filter_var($_POST['loginname'], FILTER_SANITIZE_STRING);
 $loginpassword = filter_var($_POST['loginpassword'],FILTER_SANITIZE_STRING);
+
 //$loginpassword = password_hash($loginpassword,PASSWORD_DEFAULT);
+
+
 
 //retrive the hashed password
 $statement = $db->prepare("SELECT password FROM 
