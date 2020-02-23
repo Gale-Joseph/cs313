@@ -5,10 +5,18 @@ $db = connectdb();
 
 //validate whether user can make that purchase
 //1.Get total of user's account
-$accountAmount = $db->prepare('SELECT tradeacctamount FROM public.user');
+//$accountAmount = $db->prepare('SELECT tradeacctamount FROM public.user WHERE id=(SELECT id from public.user where $_SESSION[userInfo][email]=public.user.email)');
+$accountAmount = $db->prepare('SELECT tradeacctamount FROM public.user WHERE public.user.id=9');
 $accountAmount->execute();
 $row = $accountAmount->fetch(PDO::FETCH_BOTH);
 $oldAmount = $row['tradeacctamount'];
+if($oldAmount<100){
+    $message = "Not enough in account";
+    include "/view/home";
+    exit;
+}
+
+// header('Location: test.php');
 
 //2. Put form data into variables
 $ticker=strtolower($_POST['ticker']);
@@ -23,7 +31,7 @@ $total = $price*$shares;
 /* this is a problem because portfolio won't represent true price;
 new shares added will have price of original shares*/
 $tickerFound= False;
-$portfolio = $db->prepare('SELECT ticker FROM portfolio');
+$portfolio = $db->prepare('SELECT ticker, buyprice FROM portfolio');
 $portfolio->execute();
 while($row=$portfolio->fetch(PDO::FETCH_ASSOC)){
     if(strtolower($row['ticker'])==strtolower($ticker)){

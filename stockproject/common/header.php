@@ -1,6 +1,6 @@
 <div class="topnav">
   
-  <form action="../index.php" method="post">
+  <form action="../transactions/index.php" method="post">
         <input type="hidden" name="action" value="">
         <input type ="submit" name="submit" value="Home">
     </form>  
@@ -13,7 +13,7 @@
       <input type ="submit" name="submit" value="View Transaction History">
   </form>
   <form action="../accounts/index.php" method="post">
-      <input type="hidden" name="action" value="viewLogin">
-      <input type ="submit" name="submit" value="Login">
+      <input type="hidden" name="action" value="logout">
+      <input type ="submit" name="submit" value="Logout">
   </form>
 </div> 

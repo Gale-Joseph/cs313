@@ -2,11 +2,12 @@
 //accounts model - functions for reading/updating
 
 //get account info based on default user
-function getUserInfo(){
+function getUserInfo($email){
     $db = connectdb();
     $sql = 'SELECT firstname, lastname, email, tradeacctamount FROM public.user
-    WHERE id = 1';
+    WHERE email = :email';
     $stmt= $db->prepare($sql);
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
     $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
@@ -34,6 +35,17 @@ function updateUser($firstname,$lastname,$email,$password){
     $stmt->bindValue(':email', $email, PDO::PARAM_STR);
     $stmt->bindValue(':password', $password, PDO::PARAM_STR);
     $stmt->execute();
-
 }
+
+function refreshTradeAcct($email){
+    $db = connectdb();
+    $sql = "SELECT tradeacctamount FROM public.user WHERE 
+        public.user.email = '$email'";
+    $stmt= $db->prepare($sql);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_BOTH);
+    return $row['tradeacctamount'];
+}
+
+
 ?>

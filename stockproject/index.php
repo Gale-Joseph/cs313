@@ -9,6 +9,8 @@ require_once 'library/connections.php';
 require_once 'model/transactions-model.php';
 require_once 'library/functions.php';
 
+//get head
+
 //use filter_input() to weed out malicious code
 $action = filter_input(INPUT_POST, 'action');
 
@@ -23,12 +25,11 @@ if($action==NULL){
 
 switch($action){
   case 'home':
-    $titleTag = "Home";
-    include 'view/home.php';
+    header('Location: view/login.php');
     break;
   default:
-      $titleTag = "home";
-    include 'view/home.php';
+    header('Location: view/login.php');
+    break;
 }
 
   ?>

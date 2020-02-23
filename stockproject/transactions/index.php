@@ -3,11 +3,17 @@
 //create a session
 session_start();
 
+
 //get database connection file
 require_once '../library/connections.php';
 require_once '../model/transactions-model.php';
 require_once '../library/functions.php';
 require_once '../model/accounts-model.php';
+
+//refresh tradeaccount amount for session variable
+$email = $_SESSION['userInfo']['email'];
+$_SESSION['userInfo']['tradeacctamount'] = 
+  refreshTradeAcct($email);
 
 //use filter_input() to weed out malicious code
 $action = filter_input(INPUT_POST, 'action');
@@ -34,37 +40,92 @@ switch($action){
     $titleTag = "Transactions";
     //get all transactions in an array for looping/display
     $db = connectdb();
-    $sql = "SELECT * FROM trans";
+    $sql = "SELECT * FROM trans WHERE userid = 
+            (SELECT id FROM public.user WHERE public.user.email='$email')";
     $statement = $db->prepare($sql);
     $statement ->execute();
     //do fetch on view
     include '../view/trans.php';
     break;
 
-    case 'addfunds':
-      $db = connectdb();
-      $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT);
-      addFunds($amount);
-      //update session info
-      $_SESSION['userInfo'] = getUserInfo();
-      $date = date("Y-m-d");
-      
-      //add to trans table..this code is temporary
-      $sql3 = "INSERT INTO trans(date,deposittotal) 
-        VALUES('$date','$amount')";
-      $stmt3 = $db->prepare($sql3);
-      $stmt3->execute();
+  case 'addfunds':
+    $email = $_SESSION['userInfo']['email'];
+    $db = connectdb();
+    $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT);
+    addFunds($email,$amount);
+    //update session info
+    $date = date("Y-m-d");
+    
+    //add to trans table..this code is temporary
+    $addFunds = addTrans($email,'none',0,0,$date,'deposit',$amount);
+    
+    //add message and return to admin page
+    $message = '<p class="notice">Funds added</p>';
+    include '../view/admin.php';
+    exit;
 
-      //add message and return to admin page
-      $message = '<p class="notice">Funds added</p>';
-      include '../view/admin.php';
+  case 'buyStock':
+    //validate purchase fields
+    $ticker = filter_input(INPUT_POST,'ticker',FILTER_SANITIZE_STRING);
+    $date = preg_replace("([^0-9/])", "", $_POST['date']);
+    $shares = filter_input(INPUT_POST,'shares',FILTER_SANITIZE_NUMBER_INT);
+    $price = filter_input(INPUT_POST,'price',FILTER_SANITIZE_NUMBER_FLOAT);
+
+    
+    if(!$ticker||!$date||!$shares||!$price){
+      $errBuy = "*Please enter appropriate characters for each field";
+      include "../view/home.php";
       exit;
+    }
 
+    //validate whether user has sufficient funds
+    $email = $_SESSION['userInfo']['email'];
+    $amount = $shares * $price;
+    $hasFunds = checkFunds($email,$amount);
+    
+    if(!$hasFunds){
+      $errBuy = "*Not enough funds. Please add funds.";
+      include "../view/home.php";
+      exit;
+    } 
+
+    //add stock to transaction table and debit from account and add to portfolio
+    //$stockPurchased = buyStock();
+    //checkTicker function
+    $buyStock = buyStock($email,$ticker,$price,$shares,$date);
+    if($buyStock){
+      $errBuy = "Purchase Complete";
+    }
+    include "../view/home.php";
+    exit;
+
+  case 'sellStock':
+    $email = $_SESSION['userInfo']['email'];
+    //validate purchase fields
+    $ticker = filter_input(INPUT_POST,'ticker',FILTER_SANITIZE_STRING);
+    $date = preg_replace("([^0-9/])", "", $_POST['date']);
+    $shares = filter_input(INPUT_POST,'shares',FILTER_SANITIZE_NUMBER_INT);
+    $price = filter_input(INPUT_POST,'price',FILTER_SANITIZE_NUMBER_FLOAT);
+
+    if(!$ticker||!$date||!$shares||!$price){
+      $errValidate = "*Please enter appropriate characters for each field";
+      include "../view/home.php";
+      exit;
+    }
+
+    //validate if customer can sell
+
+    //add stock sale to transaction table and credit to account, take out of portfolio
+    $sellStock = sellStock($email,$ticker,$price,$shares,$date);
+    $errValidate = $sellStock;
+    
   default:
        $titleTag = "Home";
        $db = connectdb();
-       $statement = $db->prepare('SELECT * FROM portfolio');
-       $statement->execute();
+       $results = $db->prepare("SELECT * FROM portfolio WHERE
+       userid = (SELECT id FROM public.user 
+                            WHERE public.user.email = '$email')");
+       $results->execute();
       include '../view/home.php';
 }
 
