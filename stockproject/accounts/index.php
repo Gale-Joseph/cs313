@@ -144,7 +144,6 @@ switch($action){
       }else{
         //if valid, go to home page
         $_SESSION['userInfo'] = getUserInfo($email);
-        $message = "<p class='notice'>Welcome, $clientData[firstname]";
         include '../view/home.php';
         exit;      
       }

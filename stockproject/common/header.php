@@ -16,4 +16,5 @@
       <input type="hidden" name="action" value="logout">
       <input type ="submit" name="submit" value="Logout">
   </form>
+ 
 </div> 

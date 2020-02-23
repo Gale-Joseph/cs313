@@ -8,25 +8,25 @@
     <?php include '../common/head.php';?>
 </head>
 <body>
-<header>
-    <?php include '../common/header.php';?>
-</header>
+    
+    <header>
+        <?php include '../common/header.php';?>
+    </header>
+    <div class='main'>
     <div class="pageIntro">
         <h1>User Account Information</h1>
-      
-        </p>
-    </div>
-    <ul class="userInfo">
-        <li>First Name: <?php echo $_SESSION['userInfo']['firstname'] ?></li>
-        <li>Last Name: <?php echo $_SESSION['userInfo']['lastname'] ?></li>
-        <li>Email: <?php echo $_SESSION['userInfo']['email']?></li>  
-              
-    </ul>
+    
+        <ul class="userInfo">
+            <li>First Name: <?php echo $_SESSION['userInfo']['firstname'] ?></li>
+            <li>Last Name: <?php echo $_SESSION['userInfo']['lastname'] ?></li>
+            <li>Email: <?php echo $_SESSION['userInfo']['email']?></li> 
+        </ul>
 
-    <?php if(isset($message)){echo $message;}?>
+        <?php if(isset($message)){echo $message;}?>
     </div> 
+    <hr class='new1'>
 
-    <div class="pageIntro">
+    <div class="pageIntro2">
         <h1>Dashboard</h1>
     </div>
 
@@ -43,13 +43,13 @@
     <div class="forms">
         <h2>Buy Stocks</h2>
     <form id='buyForm2' action='../transactions/index.php' method='post'>
-            <label for="ticker">Ticker Symbol</label>
+            <label for="ticker">Ticker Symbol</label><br>
                 <input type="text" name="ticker" id="ticker"><br>
-            <label for="date">Date</label>
+            <label for="date">Date</label><br>
                 <input type="text" name="date" value="2020/12/31" id="date"><br>
-            <label for="shares">Shares</label>
+            <label for="shares">Shares</label><br>
                 <input type="text" name="shares" id="shares"><br>
-            <label for="price">Price</label>
+            <label for="price">Price</label><br>
                 <input type="text" name="price" id="price"><br>
                 <input type='hidden' name='action' value='buyStock'>
                 <?php if(isset($errBuy))
@@ -61,13 +61,13 @@
     <div class="forms">
     <h2>Sell Stocks</h2>
      <form id='sellForm2' action='../transactions/index.php' method='post'>
-        <label for="ticker">Ticker Symbol</label>
+        <label for="ticker">Ticker Symbol</label><br>
             <input type="text" name="ticker" id="ticker"><br>
-        <label for="date">Date</label>
+        <label for="date">Date</label><br>
             <input type="text" name="date" value="2020/12/31" id="date"><br>
-        <label for="shares">Shares</label>
+        <label for="shares">Shares</label><br>
             <input type="text" name="shares" id="shares"><br>
-        <label for="price">Price</label>
+        <label for="price">Price</label><br>
             <input type="text" name="price" id="price"><br>
             <input type='hidden' name='action' value='sellStock'>
             <?php if(isset($errSell))
@@ -122,6 +122,7 @@
 </body>
 
 <footer><?php include '../common/footer.php'?></footer>
+</div><!--close main-->
 </html>
 
 

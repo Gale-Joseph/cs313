@@ -25,8 +25,5 @@
     //this code was also included in stack overflow but created error
     //session_cache_limiter("private_no_expire");
 
-    if(isset($_SESSION['firstname'])){
-       echo "Welcome, ".$_SESSION['firstname']; 
-    }
-    ?>
+        ?>
 </head>
