@@ -1,6 +1,8 @@
 const path = require('path')
 const express = require('express')
 const app = express();//access to non-static 
+//process.env.PORT will be for heroku
+const port = process.env.PORT || 3000
 
 app.set('view engine', 'ejs')
 
@@ -19,7 +21,7 @@ app.get('/math_service',compute_json)
 
 
 //turn on listener
-const port = 3000
+
 app.listen(port, ()=>{
     console.log("Server is running on port" + port)
 })
