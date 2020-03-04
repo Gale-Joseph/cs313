@@ -30,7 +30,7 @@ function compute_json(req,res){
     const operand2 = Number(req.query.operand2);
 
     let result = 0;
-    if(operation=='+'){
+    if(operation=='plus'){
         result = operand1+operand2;
     }else if(operation == '-'){
         result = operand1-operand2

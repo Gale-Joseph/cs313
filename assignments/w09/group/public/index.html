@@ -7,15 +7,53 @@
 </head>
 <body>
     <form action="../math_service" method="get">
-        <input type="text" name="operand1">
+        <input type="text" id = "operand1" name="operand1">
         <select id = 'operation' name = 'operation'>
-            <option value = "+">+</option>
+            <option value = "plus">+</option>
             <option value = "-">-</option>
             <option value = "x">&times</option>
             <option value = "/">&divide</option>
         </select>
-        <input type="text" name="operand2">
+        <input type="text" id = "operand2" name="operand2">
         <input type="submit">
+        <button type=button id='button'>Ajax Update</button>
     </form>
+    <br>
+    <div id='text'></div>
+    <script>
+
+    //create an event listenter
+    document.getElementById('button').addEventListener('click',loadText);
+    function loadText(){
+        //create xhr object
+        var xhr = new XMLHttpRequest();
+        var operand1 = parseInt(document.getElementById('operand1').value,10);
+        var operation = document.getElementById('operation').value;
+        var operand2 = parseInt(document.getElementById('operand2').value,10);
+
+
+        //open - type, url/file, async or not
+        
+        xhr.open('GET',"/math_service?operand1=" + operand1 + "&operand2=" + operand2 + "&operation=" + operation,true);
+
+        //optional - used for loading
+        xhr.onprogress = function(){
+          console.log('Readystate: ', xhr.readyState)  
+        }
+        //
+        xhr.onload = function(){
+            if(this.status==200){
+                console.log(this.responseText);
+                var j = JSON.parse(xhr.responseText);
+                document.getElementById('text').innerHTML = j.result;
+            }
+        }
+        xhr.onerror = function(){
+            console.log('Request error...')
+        }
+        //sends request
+        xhr.send();
+    }
+    </script>
 </body>
 </html>
