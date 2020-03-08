@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="styles/main.css" type="text/css">
+    <title>Service Center</title>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#"> <img class="img-responsive" src="images/usps.png"></a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Work for Us</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Get Pricing</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="container">
+        <h1>Mail service center</h1>
+        <p>Enter your mail specs to get a price</p>
+    </div>
+    <div class="container">
+    <form action="../math" method="get">
+        <label for="weight">Weight not over</label><br>
+        <select id = 'weight' name = 'weight'>
+            <option value = 1>1</option>
+            <option value = 2>2</option>
+            <option value = 3>3</option>
+            <option value = 3.5>3.5</option>
+            <option value = 4>4</option>
+            <option value = 5>5</option>
+            <option value = 6>6</option>
+            <option value = 7>7</option>
+            <option value = 8>8</option>
+            <option value = 9>9</option>
+            <option value = 10>10</option>
+            <option value = 11>11</option>
+            <option value = 12>12</option>
+            <option value = 13>13</option>
+        </select>  ounces<br>
+        <label for="type">Mail type</label><br>
+        <select id = 'type' name = 'type'>
+            <option value = "stamp">Letters (Stamped)</option>
+            <option value = "meter">Letters (Metered)</option>
+            <option value = "flat">Large Envelopes (Flats)</option>
+            <option value = "package">First-Class Package Service—Retail</option>
+        </select><br>
+        <label for="zone">Zone</label><br>
+        <select id = 'zone' name = 'zone'>
+            <option value = 1>1</option>
+            <option value = 2>2</option>
+            <option value = 3>3</option>
+            <option value = 4>4</option>
+            <option value = 5>5</option>
+            <option value = 6>6</option>
+            <option value = 7>7</option>
+            <option value = 8>8</option>
+            <option value = 9>9</option>
+        </select><br>
+        <input class='submit' type="submit" value="Submit">
+    </form>
+    <br>
+    </div>
+</body>
+</html>

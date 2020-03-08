@@ -1,0 +1,13 @@
+img{
+   width:3em;
+}
+
+label{
+    margin-top: 1.5em;
+}
+
+.submit{
+    margin-top: 1.5em;
+    background-color:#333366;
+    color: white;
+}
