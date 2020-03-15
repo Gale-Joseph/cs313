@@ -8,16 +8,79 @@
 <body>
     <h1>Welcome to the Stock Program Run on Node.js</h1>
     <p>For testing purposes, please enter these two tests: </p>
-    <p>1.  enter nothing and hit submit to see an empty json file</p>
-    <p>2.  enter 'cvx' without the ticks to see a return message</p>
+    <p>1.  enter nothing and hit submit to see an error</p>
+    <p>2.  enter 'cvx' or 'aapl' without the ticks to see a return message</p>
 <form action = "../getStock" method = 'get'>
     <input type = 'text' id='ticker' name='ticker'>
-    <button type="submit" id='buttonStock'>Get Stock Info</button>
+    <button type="button" id='myBtn'>Get Stock Info</button>
 </form>
 
 </form>
-    <div id='text'></div> 
+    <div id='demo'></div> 
 </body>
+
+<script>
+    document.getElementById("myBtn").addEventListener("click", getStock);
+    
+    function getStock() {           
+      var ticker = document.getElementById("ticker").value;      
+      var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=QTC0C7W8VC9B36VW'
+      
+      var ajax = new XMLHttpRequest();
+      ajax.open('GET',url,true);
+
+      ajax.onload = function(){
+          console.log('Onload state: ' + ajax.readyState);
+          if(this.status==200){
+              console.log(this.responseText);
+              document.getElementById('demo').innerHTML = this.responseText;
+          }
+      }
+         
+      ajax.onreadystatexchange = function() {
+        console.log(ajax.readyState);
+                if (ajax.readyState === 4 && ajax.status == 200) {
+                    try {
+                        console.log('made it this far');
+                        var data = JSON.parse(ajax.responseText);
+                    }
+                    catch(err) {
+                        console.log(err.message);
+                    }
+                    document.getElementById("demo").innerHTML = JSON.stringify(data);
+                }
+            }
+            ajax.send();
+    }
+    </script>
+<script>
+    
+    
+    //document.getElementById('buttonStock').addEventListener("click",getStock);
+    
+    //function getStock(){
+     //   console.log("hello");
+    // console.log("in function");
+    // let ticker = document.getElementById('ticker').value;
+    // let ajax = new XMLHttpRequest();
+    // ajax.open('GET','https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
+    // +ticker+'&apikey=QTC0C7W8VC9B36VW',true);
+
+    // ajax.onreadystatexchange = function() {
+    //             if (ajax.readyState === 4 && ajax.status == 200) {
+    //                 try {
+    //                     var data = JSON.parse(ajax.responseText);
+    //                 }
+    //                 catch(err) {
+    //                     console.log(err.message);
+    //                 }
+    //                 document.getElementById("text").innerHTML = JSON.stringify(data);
+    //             }
+    //         }
+    //         ajax.send();
+    // }
+
+</script>
 
 </html>
 
