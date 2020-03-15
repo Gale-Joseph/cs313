@@ -5,15 +5,8 @@ const { Pool, Client } = require('pg')
 require('dotenv').config();
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-<<<<<<< HEAD
-var fetch = require('fetch');
 var request = require('request');
 
-=======
-var localStorage = require('node-localstorage')
-const https = require('https');
->>>>>>> 2e7e9f55907da723aec4a34380429cda0b61a67f
 
 
 const app = express()
@@ -28,26 +21,7 @@ const app = express()
       res.send({
         error: 'You must provide a search term'
       })
-<<<<<<< HEAD
-    // }
-    // const Http = new XMLHttpRequest();
-    // var ticker = req.query.ticker;
-    // const url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="
-    // +ticker+"&apikey=QTC0C7W8VC9B36VW"
-    // Http.open("GET",url);
-    // Http.send();
-    // Http.onreadystatechange=(e)=>{
-    //   console.log(Http.responseText)
-      
-     
     }  
-   
-
-    // var resultText = Http.responseText;
- 
-    // fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
-    // +ticker+'&apikey=QTC0C7W8VC9B36VW')
-    // .then(res => console.log(res))
     var ticker = req.query.ticker;
     var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
     +ticker+'&apikey=QTC0C7W8VC9B36VW';
@@ -57,32 +31,4 @@ const app = express()
       res.send(stock_json);
     })
 
-    //res.send("You made a successful api call. Please check your console.log");
-=======
-    }
-    const Http = new XMLHttpRequest();
-    var ticker = req.query.ticker;
-    const url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="
-    +ticker+"&apikey=QTC0C7W8VC9B36VW"
-    Http.open("GET",url);
-    Http.send();
-    Http.onreadystatechange=(e)=>{
-      console.log(Http.responseText)
-      
-     
-    }  
-    const got = require('got');
-
-    // got("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="
-    // +ticker+"&apikey=TXLZQ0VXP5QUYSXN", { json: true }).then(response => {
-    //   console.log(response.body.url);
-    //   console.log(response.body.explanation);
-    // }).catch(error => {
-    //   console.log(error.response.body);
-    // });
-    var resultText = Http.responseText;
- 
-    res.send("You made a successful api call. Please check your console.log");
->>>>>>> 2e7e9f55907da723aec4a34380429cda0b61a67f
-    //.res.json(JSON.string(resultText)["Global Quote"]["01. symbol"]);
 })

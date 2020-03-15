@@ -7,7 +7,8 @@ const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var fetch = require('fetch');
-var request = require('request');
+var request = require('@coolaj86/urequest');
+var needle = require('needle');
 
 
 
@@ -45,7 +46,7 @@ const app = express()
     var ticker = req.query.ticker;
     var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
     +ticker+'&apikey=QTC0C7W8VC9B36VW';
-    request(url,function(error,response,body){
+   request(url,function(error,response,body){
       stock_json= JSON.parse(body);
       console.log(stock_json);
       res.send(stock_json);
