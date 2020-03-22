@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
     <title>Receipt of Purchase</title>
 </head>
 <body>
+    <h1>Congrats! You just purchased a stock!</h1>
     <button type="button" id="getPort">Show Portfolio</button>
     <div id="display"></div>
 </body>
@@ -15,6 +17,9 @@
     document.getElementById("getPort").addEventListener("click", getPort);
     
     function getPort() {  
+        var mainContainer = document.getElementById("display");
+        mainContainer.innerHTML='';
+        
         console.log("hello world");           
         var ajax = new XMLHttpRequest();
         console.log(ajax.readyState)
@@ -26,24 +31,19 @@
         console.log('Onload state: ' + ajax.readyState);
         console.log('Status: ' + ajax.status);
         if(this.status==200){
-              //console.log(this.responseText);
-              //convert response text to json for display, fix price to 2 decimal 
               console.log(typeof(this.responseText));
               var parsedText = JSON.parse(this.responseText);
               console.log(typeof(parsedText));
               console.log(Object.keys(parsedText).length);
-              //loop through data
-              var mainContainer = document.getElementById("display");
+              //loop through data              
               for(var i=0;i<Object.keys(parsedText).length;i++){
                 var div = document.createElement("div");
-                div.innerHTML = 'Ticker: ' + parsedText[i].ticker + ' ' + parsedText[i].price;
+                div.innerHTML = 
+                    '<span class="row"><span class="portDisplay">Ticker:</span> ' + parsedText[i].ticker + ' ' + 
+                    '<span class="portDisplay">Price:</span> ' +  parsedText[i].price + ' ' + 
+                    '<span class="portDisplay">Shares:</span> ' + parsedText[i].shares + '</span>';
                 mainContainer.appendChild(div);
               }
-              var jsonStock = JSON.parse(this.responseText);
-               var ticker = jsonStock["Global Quote"]["01. symbol"];
-               var rawPrice =  parseFloat(jsonStock["Global Quote"]["05. price"]);
-               var price = rawPrice.toFixed(2);
-            //   document.getElementById('demo').innerHTML = 
             }
 
         }   
