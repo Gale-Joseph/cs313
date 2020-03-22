@@ -14,7 +14,6 @@
     <input type = 'text' id='ticker' name='ticker'>
     <button type="button" id='myBtn'>Get Stock Info</button>
 </form>
-
 </form>
     <div id='demo'></div> 
 </body>
@@ -24,33 +23,38 @@
     
     function getStock() {           
       var ticker = document.getElementById("ticker").value;      
-      var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=QTC0C7W8VC9B36VW'
-      
+      var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=TXLZQ0VXP5QUYSXN'
+       //original api key:TXLZQ0VXP5QUYSXN
+        //alternate api key: QTC0C7W8VC9B36VW
       var ajax = new XMLHttpRequest();
-      ajax.open('GET',url,true);
+      ajax.open('get',url,true);
 
       ajax.onload = function(){
           console.log('Onload state: ' + ajax.readyState);
+          console.log('Status: ' + ajax.status);
           if(this.status==200){
               console.log(this.responseText);
-              document.getElementById('demo').innerHTML = this.responseText;
+              //convert response text to json for display, fix price to 2 decimal places
+              var jsonStock = JSON.parse(this.responseText);
+              var ticker = jsonStock["Global Quote"]["01. symbol"];
+              var rawPrice =  parseFloat(jsonStock["Global Quote"]["05. price"]);
+              var price = rawPrice.toFixed(2);
+              document.getElementById('demo').innerHTML = 
+              '<form action="/buyStock" method="post">' +
+              '<label for="ticker">Ticker</label><br>'+
+              '<input type="text" id="ticker" name="ticker" value='+ticker+'><br>'+
+              '<label for="price">Price</label><br>'+
+              '<input type="text" id="price" name="price" value='+price+'><br>'+
+              '<label for="shares">Shares</label><br>'+
+              '<input type="text" id="shares" name="shares"><br>'+
+              '<button type="submit" name="button" value="submit">Buy</button>'
+                
+                ticker + ' ' + rawPrice;
           }
       }
-         
-      ajax.onreadystatexchange = function() {
-        console.log(ajax.readyState);
-                if (ajax.readyState === 4 && ajax.status == 200) {
-                    try {
-                        console.log('made it this far');
-                        var data = JSON.parse(ajax.responseText);
-                    }
-                    catch(err) {
-                        console.log(err.message);
-                    }
-                    document.getElementById("demo").innerHTML = JSON.stringify(data);
-                }
-            }
-            ajax.send();
+    
+    ajax.send();
+    
     }
     </script>
 <script>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt of Purchase</title>
+</head>
+<body>
+    <button type="button" id="getPort">Show Portfolio</button>
+    <div id="display"></div>
+</body>
+
+
+<script>
+    document.getElementById("getPort").addEventListener("click", getPort);
+    
+    function getPort() {  
+        console.log("hello world");           
+        var ajax = new XMLHttpRequest();
+        console.log(ajax.readyState)
+        ajax.open('get','../../getPort',true);
+        console.log(ajax.readyState)
+        ajax.send();
+
+        ajax.onload = function(){
+        console.log('Onload state: ' + ajax.readyState);
+        console.log('Status: ' + ajax.status);
+        if(this.status==200){
+              //console.log(this.responseText);
+              //convert response text to json for display, fix price to 2 decimal 
+              console.log(typeof(this.responseText));
+              var parsedText = JSON.parse(this.responseText);
+              console.log(typeof(parsedText));
+              console.log(Object.keys(parsedText).length);
+              //loop through data
+              var mainContainer = document.getElementById("display");
+              for(var i=0;i<Object.keys(parsedText).length;i++){
+                var div = document.createElement("div");
+                div.innerHTML = 'Ticker: ' + parsedText[i].ticker + ' ' + parsedText[i].price;
+                mainContainer.appendChild(div);
+              }
+              var jsonStock = JSON.parse(this.responseText);
+               var ticker = jsonStock["Global Quote"]["01. symbol"];
+               var rawPrice =  parseFloat(jsonStock["Global Quote"]["05. price"]);
+               var price = rawPrice.toFixed(2);
+            //   document.getElementById('demo').innerHTML = 
+            }
+
+        }   
+    }  
+    
+   
+    
+    
+    </script>
+<script>
+    
+</script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+  <% include ../partials/nav.ejs %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="/lang-logo.png">
+    </a>
+    <h1>Let's Get Movie Data!</h1>  
+  </div>
+</div>
+<form action="../../index.js" method='get'>
+  <input type="text" id="movie">
+  <button type="button" id="button">Add a movie title</button>
+</form>
+<!--These will ouput information about the movie-->
+<div id='output'></div>
+<div id='image'></div>
+
+<script>
+  
+  //create an event listener for button
+  document.getElementById("button").addEventListener("click", getMovie);
+
+  /*We are creating 2 ajax calls that are nested per lab instructions*/
+  function getMovie(){
+    //set variables for AJAX request
+    var title = document.getElementById('movie').value;
+    console.log(title)
+    var key =  'a9d42775';
+    var url = 'http://www.omdbapi.com/?apikey='+key+'&t='+title;
+
+    //create xhr object
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET',url,true);
+    ajax.send();
+
+    //make api call
+    ajax.onload=function(){
+      if(this.status==200){
+        var resultText = this.responseText; //better technique to parse response text right away?
+        document.getElementById('output').innerHTML = JSON.parse(this.responseText)['Title'] + "<button onclick='getDetails("+resultText+")'>View Details</button>"; //why don't I parse?
+        console.log("Original responseText: " + resultText);
+      }
+    }
+  }
+
+  //use helper function to use resultText to show optional details
+  function getDetails(data){
+    console.log("Response Text as parameter: "  + data);
+
+    //create second ajax request per lab instructions
+    var title = data['Title']
+    var key =  'a9d42775';
+    var url = 'http://www.omdbapi.com/?apikey='+key+'&t='+title;
+
+    //create xhr object 
+    var ajax2 = new XMLHttpRequest();
+    ajax2.open('GET',url,true);
+    ajax2.send();
+
+    //create request
+    ajax2.onload=function(){
+      if(this.status==200){
+        var resultText = JSON.parse(this.responseText); //parse responseText to make useable
+        var img_url = resultText['Poster'];
+        var img_url2 = "<img src=" + img_url + ">";
+        document.getElementById('image').innerHTML = img_url2 + resultText['Year'] + resultText['Rated'];
+       }
+    }
+  }
+</script>
+</body>
+</html>
