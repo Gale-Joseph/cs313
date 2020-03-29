@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <title>Receipt of Purchase</title>
+</head>
+<body onload="getPort()">
+    <h1>Congrats! You just purchased a stock!</h1>    
+    <div id="display"></div>
+</body>
+
+
+<script>
+    //document.getElementById("getPort").addEventListener("click", getPort);
+    
+    function getPort() {  
+       
+        let mainContainer = document.getElementById("display");
+               
+        var ajax = new XMLHttpRequest();
+        console.log(ajax.readyState)
+        ajax.open('get','../../getPort',true);
+        console.log(ajax.readyState)
+        ajax.send();
+
+        ajax.onload = function(){
+        console.log('Onload state: ' + ajax.readyState);
+        console.log('Status: ' + ajax.status);
+        if(this.status==200){
+              console.log(typeof(this.responseText));
+              var parsedText = JSON.parse(this.responseText);
+              console.log(typeof(parsedText));
+              console.log(Object.keys(parsedText).length);
+              //loop through data              
+              for(var i=0;i<Object.keys(parsedText).length;i++){
+                var div = document.createElement("div");
+                div.innerHTML = 
+                    '<span class="row"><span class="portDisplay">Ticker:</span> ' + parsedText[i].ticker + ' ' + 
+                    '<span class="portDisplay">Price:</span> ' +  parsedText[i].price + ' ' + 
+                    '<span class="portDisplay">Shares:</span> ' + parsedText[i].shares + '</span>';
+                mainContainer.appendChild(div);
+              }
+            }
+
+        }   
+    }  
+    
+   
+    
+    
+    </script>
+
+</html>

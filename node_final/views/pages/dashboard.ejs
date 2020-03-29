@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <title>Stock Program</title>
+</head>
+<body onload="getPort()">
+    <p> <% if(locals.firstname){ %><span class='welcomeMessage'><%='Welcome '+firstname%></span> <a href='../../logout'>Log Out</a><% }else{ %><a href='../../logout'>Log Out</a><% } %></p>
+    <p></p>
+    <h1>Dashboard</h1>
+    <h2>Find New Stocks</h2>
+    <p>Enter 'cvx' without the ticks and click "Get Stock Info"</p>
+<form action = "../getStock" method = 'get'>
+    <input type = 'text' id='ticker' name='ticker' placeholder='cvx'>
+    <button type="button" id='myBtn'>Get Stock Info</button>
+</form>
+</form>
+    <div id='stockResult'></div> 
+    <h2>Portfolio</h2>
+    <div id='display'></div> 
+</body>
+
+<script>
+    document.getElementById("myBtn").addEventListener("click", getStock);
+    
+    function getStock() {           
+      var ticker = document.getElementById("ticker").value;      
+      var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=TXLZQ0VXP5QUYSXN'
+       //original api key:TXLZQ0VXP5QUYSXN
+        //alternate api key: QTC0C7W8VC9B36VW
+      var ajax = new XMLHttpRequest();
+      ajax.open('get',url,true);
+
+      ajax.onload = function(){
+          console.log('Onload state: ' + ajax.readyState);
+          console.log('Status: ' + ajax.status);
+          if(this.status==200){
+              console.log(this.responseText);
+              //convert response text to json for display, fix price to 2 decimal places
+              var jsonStock = JSON.parse(this.responseText);
+              var ticker = jsonStock["Global Quote"]["01. symbol"];
+              var rawPrice =  parseFloat(jsonStock["Global Quote"]["05. price"]);
+              var price = rawPrice.toFixed(2);
+              document.getElementById('stockResult').innerHTML = 
+              '<form action="/buyStock" method="post">' +
+              '<label for="ticker">Ticker</label><br>'+
+              '<input readonly type="text" id="ticker" name="ticker" required value='+ticker+'><br>'+
+              '<label for="price">Price</label><br>'+
+              '<input readonly type="text" id="price" name="price" required value='+price+'><br>'+
+              '<label for="shares">Shares</label><br>'+
+              '<input type="text" id="shares" name="shares" required><br>'+
+              '<button type="submit" name="button" value="submit">Buy</button>'
+                
+                ticker + ' ' + rawPrice;
+          }
+      }
+    
+    ajax.send();
+    
+    }
+
+  
+    function getPort() {  
+        let mainContainer = document.getElementById("display");
+               
+        var ajax = new XMLHttpRequest();
+        console.log(ajax.readyState)
+        ajax.open('get','../../getPort',true);
+        console.log(ajax.readyState)
+        ajax.send();
+
+        ajax.onload = function(){
+        console.log('Onload state: ' + ajax.readyState);
+        console.log('Status: ' + ajax.status);
+        if(this.status==200){
+              console.log(typeof(this.responseText));
+              var parsedText = JSON.parse(this.responseText);
+              console.log(typeof(parsedText));
+              console.log(Object.keys(parsedText).length);
+              //loop through data              
+              for(var i=0;i<Object.keys(parsedText).length;i++){
+                var div = document.createElement("div");
+                div.innerHTML = 
+                    '<span class="row"><span class="portDisplay">Ticker:</span> ' + parsedText[i].ticker + ' ' + 
+                    '<span class="portDisplay">Price:</span> ' +  parsedText[i].price + ' ' + 
+                    '<span class="portDisplay">Shares:</span> ' + parsedText[i].shares + '</span>';
+                mainContainer.appendChild(div);
+              }
+            }
+
+        }   
+    } 
+
+    </script>
+
+</html>
+

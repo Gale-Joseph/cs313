@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+    <title>Document</title>
+</head>
+<body>
+    <% if(locals.error){ %><%=error%><% }else{ %><% } %> <!--https://stackoverflow.com/questions/7289916/how-would-you-check-for-undefined-property-in-ejs-for-node-js-->
+    <!--Register form-->
+    <div class="form-style-10">
+        <h1>Not a member? Sign up now!<span>It's free and no credit card is required.</span></h1>
+        
+        <form action='../../register' method='post'>
+            <div class="section"><span>1</span>First & Last Name</div>
+            <div class="inner-wrap">
+                <label>First Name<input type="text" id = 'firstname' name='firstname' 
+                    value=<% if(locals.firstname){ %><%=firstname%><% }else{ %><% } %>></label>
+                <% if(locals.firstnameError){ %><span class='errorMessage'><%=firstnameError%></span><% }else{ %><% } %>
+                <label>Last Name <input type="text" id='lastname' name='lastname'
+                    value=<% if(locals.lastname){ %><%=lastname%><% }else{ %><% } %>></label>
+                <% if(locals.lastnameError){ %><span class='errorMessage'><%=lastnameError%></span><% }else{ %><% } %>
+            </div>
+        
+            <div class="section"><span>2</span>Email</div>
+            <div class="inner-wrap">
+                <label>Email Address <input type="text" id='email'name="email"
+                    value=<% if(locals.email){ %><%=email%><% }else{ %><% } %>></label>
+                <% if(locals.emailError){ %><span class='errorMessage'><%= emailError %> <a href="/">Click here to log in</a> </span><% }else{ %><% } %>
+            </div>
+        
+            <div class="section"><span>3</span>Passwords</div>
+                <div class="inner-wrap">
+                <label>Password <input type="password" id='password1'name="password1" /></label>
+                <label>Confirm Password <input type="password" id='password2'name="password2" /></label>
+                <% if(locals.passwordError){ %><span class='errorMessage'><%=passwordError%></span><% }else{ %><% } %>
+            </div>
+            <div class="button-section">
+                <button type='submit'>Register</button>
+             <span class="privacy-policy">
+             <input type="checkbox" id ='terms' name="terms">You agree to our Terms and Policy.<br>
+             <% if(locals.termsError){ %><span class='errorMessage'><%=termsError%></span><% }else{ %><% } %>
+             </span>
+            
+            </div>
+        </form>
+        </div>
+
+    
+</body>
+</html>

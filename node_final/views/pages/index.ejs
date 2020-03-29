@@ -3,57 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-    <title>Receipt of Purchase</title>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+    <title>Document</title>
 </head>
 <body>
-    <h1>Congrats! You just purchased a stock!</h1>
-    <button type="button" id="getPort">Show Portfolio</button>
-    <div id="display"></div>
-</body>
-
-
-<script>
-    document.getElementById("getPort").addEventListener("click", getPort);
-    
-    function getPort() {  
-        var mainContainer = document.getElementById("display");
-        mainContainer.innerHTML='';
+    <div class="form-style-10">
+        <h1>Welcome to Stock Trader<span>It's time to get rich!</span></h1>
+    <form action='../login' method='post'>
+        <div class="section">Login</div>
+        <% if(locals.error){ %><span class='errorMessage'><%=error%></span><% }else{ %><% } %>
+        <div class="inner-wrap">
+           
+            <label>Username or email<input required type="text" id = 'username' name='username'></label>               
+            <label>Password<input required type="password" id='password' name='password' ></label>               
+        </div>
+        <div class="button-section">
+            <button type='submit'>Login</button>
+        </div>
         
-        console.log("hello world");           
-        var ajax = new XMLHttpRequest();
-        console.log(ajax.readyState)
-        ajax.open('get','../../getPort',true);
-        console.log(ajax.readyState)
-        ajax.send();
+        <div class="inner-wrap">
+            <a href="/toRegister">Not a member? Click here to sign up today</a>           
+        </div>
+    </form>
 
-        ajax.onload = function(){
-        console.log('Onload state: ' + ajax.readyState);
-        console.log('Status: ' + ajax.status);
-        if(this.status==200){
-              console.log(typeof(this.responseText));
-              var parsedText = JSON.parse(this.responseText);
-              console.log(typeof(parsedText));
-              console.log(Object.keys(parsedText).length);
-              //loop through data              
-              for(var i=0;i<Object.keys(parsedText).length;i++){
-                var div = document.createElement("div");
-                div.innerHTML = 
-                    '<span class="row"><span class="portDisplay">Ticker:</span> ' + parsedText[i].ticker + ' ' + 
-                    '<span class="portDisplay">Price:</span> ' +  parsedText[i].price + ' ' + 
-                    '<span class="portDisplay">Shares:</span> ' + parsedText[i].shares + '</span>';
-                mainContainer.appendChild(div);
-              }
-            }
-
-        }   
-    }  
     
-   
-    
-    
-    </script>
-<script>
-    
-</script>
+    </div>
+</body>
 </html>
