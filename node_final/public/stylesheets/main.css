@@ -149,8 +149,44 @@ span{
 	color: red;
 }
 
-a{
-    text-decoration: none;
+.headerbar a{
+	text-decoration: none;
+	color: white;
 }
 
+a{
+	text-decoration: none;	
+}
 
+input{
+	width: 3.5em;
+	
+}
+.noborder{
+ border: hidden;
+}
+#sold{
+	background-color: red;
+
+}
+.container{
+	width: 85%;
+}
+label{
+	margin-right: .5em;
+}
+.headerbar, footer{
+	width: 100%;
+	background-color: #2A88AD;
+	color: white;
+	padding: 1em; 
+	display: flex;
+	justify-content: space-between;
+
+}
+.blue{
+	color: #2A88AD;
+}
+.picture{
+	background-image: url("stylesheets/chart.jpg")
+}

@@ -2,24 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
     <title>Stock Program</title>
 </head>
-<body onload="getPort()">
-    <p> <% if(locals.firstname){ %><span class='welcomeMessage'><%='Welcome '+firstname%></span> <a href='../../logout'>Log Out</a><% }else{ %><a href='../../logout'>Log Out</a><% } %></p>
-    <p></p>
+<body onload="getPort(), getSales()">
+<div class="headerbar">
+    <% if(locals.firstname){ %><span class='welcomeMessage'><%='Welcome '+firstname%></span>
+    <a href='../../logout'>Log Out</a><% }else{ %><a href='../../logout'>Log Out</a><% } %>
+    
+</div>
+<div class="row">
     <h1>Dashboard</h1>
-    <h2>Find New Stocks</h2>
-    <p>Enter 'cvx' without the ticks and click "Get Stock Info"</p>
-<form action = "../getStock" method = 'get'>
-    <input type = 'text' id='ticker' name='ticker' placeholder='cvx'>
-    <button type="button" id='myBtn'>Get Stock Info</button>
-</form>
-</form>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="row">
+           
+        </div>
+        <div class="row">
+            <!-- <h2 class="blue">Find New Stocks</h2><br> -->
+        
+        </div>
+        <div class="row">
+            <p>Enter a ticker like 'cvx' to find and buy more stocks</p>
+        </div>
+        <div class="row">
+            <form action = "../getStock" method = 'get'>
+                <input type = 'text' id='ticker' name='ticker' placeholder='cvx'>
+                <button type="button" id='myBtn'>Get Stock Info</button>
+            </form>
+        </div>
+    </div>
+    <div class="col">
+        <h2 class="blue">Current Holdings</h2>
+        <div id='display'></div> 
+    </div>
+
+</div>
+<hr>
+
+</div>
+
     <div id='stockResult'></div> 
-    <h2>Portfolio</h2>
-    <div id='display'></div> 
+   
+    <div class="container">
+        <div class="row">
+
+            <div class="col">
+                <h2 class="blue">Record of Gains & Losses</h2>
+                <div id='sales'></div>
+            </div>
+        </div>
+    </div>
+
+<footer>&copy; Joseph Gale 2020</footer>
+   
 </body>
 
 <script>
@@ -44,6 +86,7 @@
               var rawPrice =  parseFloat(jsonStock["Global Quote"]["05. price"]);
               var price = rawPrice.toFixed(2);
               document.getElementById('stockResult').innerHTML = 
+              '<div class="row">' + 
               '<form action="/buyStock" method="post">' +
               '<label for="ticker">Ticker</label><br>'+
               '<input readonly type="text" id="ticker" name="ticker" required value='+ticker+'><br>'+
@@ -51,7 +94,8 @@
               '<input readonly type="text" id="price" name="price" required value='+price+'><br>'+
               '<label for="shares">Shares</label><br>'+
               '<input type="text" id="shares" name="shares" required><br>'+
-              '<button type="submit" name="button" value="submit">Buy</button>'
+              '<button type="submit" name="button" value="submit">Buy</button>' + 
+              '</div>'
                 
                 ticker + ' ' + rawPrice;
           }
@@ -60,8 +104,6 @@
     ajax.send();
     
     }
-
-  
     function getPort() {  
         let mainContainer = document.getElementById("display");
                
@@ -83,9 +125,16 @@
               for(var i=0;i<Object.keys(parsedText).length;i++){
                 var div = document.createElement("div");
                 div.innerHTML = 
-                    '<span class="row"><span class="portDisplay">Ticker:</span> ' + parsedText[i].ticker + ' ' + 
-                    '<span class="portDisplay">Price:</span> ' +  parsedText[i].price + ' ' + 
-                    '<span class="portDisplay">Shares:</span> ' + parsedText[i].shares + '</span>';
+                    '<form action="/sellStock" method="post">' + 
+                    '<div class="row">'+
+                        '<div class="col-12">' + 
+                        '<label for="ticker" class="portDisplay">Ticker: </label><input class="noborder" type="text" name="ticker" value='+ parsedText[i].ticker +'></input>' + 
+                        '<label for="price" class="portDisplay">Price: </label><input class="noborder" type="text" name="price" value='+ parsedText[i].price +'></input>' + 
+                        '<label for="shares" class="portDisplay">Shares: </label><input class="noborder" type="text" name="shares" value='+ parsedText[i].shares +'></input>' + 
+                        '<input class="noborder" type="hidden" name="id" value='+ parsedText[i].id +'></input>' + 
+                        '<button type="submit" name="button" value="submit">Sell</button>'+
+                        '<hr>' + 
+                    '</div></div>'
                 mainContainer.appendChild(div);
               }
             }
@@ -93,6 +142,44 @@
         }   
     } 
 
+    function getSales() {  
+        let mainContainer = document.getElementById("sales");
+               
+        var ajax = new XMLHttpRequest();
+        console.log(ajax.readyState)
+        ajax.open('get','../../getSales',true);
+        console.log(ajax.readyState)
+        ajax.send();
+
+        ajax.onload = function(){
+        console.log('Onload state: ' + ajax.readyState);
+        console.log('Status: ' + ajax.status);
+        if(this.status==200){
+              console.log(typeof(this.responseText));
+              var parsedText = JSON.parse(this.responseText);
+              console.log(typeof(parsedText));
+              console.log(Object.keys(parsedText).length);
+              //loop through data              
+              for(var i=0;i<Object.keys(parsedText).length;i++){
+                var div = document.createElement("div");
+                div.innerHTML =                      
+                    '<div class="row">'+
+                        '<div class="col-12">' + 
+                        '<label for="ticker" class="portDisplay">Ticker: </label><input class="noborder" type="text" name="ticker" value='+ parsedText[i].ticker +'></input><br>' + 
+                        '<label for="price" class="portDisplay">Buy Price: </label><input class="noborder" type="text" value='+ parsedText[i].buyprice +'></input>' + 
+                        '<label for="price" class="portDisplay">Sell Price: </label><input class="noborder" type="text" value='+ parsedText[i].sellprice +'></input><br>' + 
+                        '<label for="shares" class="portDisplay">Shares: </label><input class="noborder" type="text" name="shares" value='+ parsedText[i].shares +'></input><br>' + 
+                        '<label for="price" class="portDisplay">Gains: </label><input class="noborder" type="text" value='+ '$' + parsedText[i].gains +'></input>' + 
+                        '<input class="noborder" type="hidden" name="id" value='+ parsedText[i].id +'></input>' + 
+                        '<hr>'
+                       
+                    '</div></div>'
+                mainContainer.appendChild(div);
+              }
+            }
+
+        }   
+    } 
     </script>
 
 </html>

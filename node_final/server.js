@@ -4,6 +4,7 @@ var app=express()
 var session=require('express-session')
 var validator = require('validator')
 var chalk = require('chalk')
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const sanitizer = require('sanitize')
 app.use(session({secret:'cats pajamas'}))
 app.use(express.urlencoded({extended:true}))
@@ -43,6 +44,7 @@ app.get('/dashboard',handleDash)
 app.post('/buyStock',buyStock)
 app.post('/sellStock',sellStock)
 app.get('/getPort',getPort);
+app.get('/getSales',getSales);
 app.get('/portfolio', function(req,res){
   res.render('pages/portfolio.ejs')
 })
@@ -161,8 +163,8 @@ function register(req,res){
                   if(err){
                       console.log(err)
                   }
-                  req.session.firstname=req.body.firstname;
-                  res.redirect('/dashboard')
+                 
+                  res.redirect('/')
               })
           })
       }
@@ -175,6 +177,20 @@ function register(req,res){
 function getPort(req,res){
   const customerid = req.session.customerid;
   const sql = "SELECT * FROM purchase WHERE customerid=$1::int";
+  const params = [customerid]
+  pool.query(sql,params,function(err,result){
+    if(err){
+      console.log("error: "+err);
+    }
+    // console.log(JSON.stringify(result.rows));
+    res.json(result.rows);
+  })
+  
+}
+
+function getSales(req,res){
+  const customerid = req.session.customerid;
+  const sql = "SELECT * FROM sell WHERE customerid=$1::int";
   const params = [customerid]
   pool.query(sql,params,function(err,result){
     if(err){
@@ -207,21 +223,74 @@ function buyStock(req,res){
   }
 
   function sellStock(req,res){
+    //make sure data is being directed properly
+    console.log("Sell Stock function inititiated")
+    console.log("Ticker: " + req.body.ticker + " Price: " + req.body.price + " Shares: " + req.body.shares + " Id: " + req.body.id )
+
+    //get updated price for stock
+    var id = req.body.id
+    var purchasePrice = req.body.price
+    var ticker = req.body.ticker; 
+    var shares = req.body.shares;
+    var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey=TXLZQ0VXP5QUYSXN'
+    console.log(url)
+    
+     //original api key:TXLZQ0VXP5QUYSXN
+     //alternate api key: QTC0C7W8VC9B36VW
+    var ajax = new XMLHttpRequest()
+    ajax.open('get',url,true)
+    ajax.send()
+
+    ajax.onload = function(){
+        console.log('Onload state for sell: ' + ajax.readyState);
+        console.log('Status for sell: ' + ajax.status);
+        if(this.status==200){
+            console.log(this.responseText);
+            //convert response text to json for display, fix price to 2 decimal places
+            var jsonStock = JSON.parse(this.responseText);
+            var rawPrice =  parseFloat(jsonStock["Global Quote"]["05. price"]);
+            var currentPrice = rawPrice.toFixed(2);
+            var gains = currentPrice - purchasePrice;
+            console.log("Gains: " + gains.toFixed(2))
+            //upate database
+            var params=[id]
+            var sql = 'DELETE FROM PURCHASE WHERE id=$1::int '
+            pool.query(sql,params,function(err,result){
+              if(err){
+                console.log("error: "+err);
+              }
+              var customerId = parseInt(req.session.customerid)             
+              console.log("Type for customerID: " + typeof(customerId))
+              var sql2 = "INSERT INTO sell VALUES(default, $1::int, $2::text, $3::numeric, $4::numeric, $5::int, $6::numeric)"
+              var params2=[customerId, ticker, purchasePrice, currentPrice, shares, gains]
+              pool.query(sql2,params2,function(err,result){
+                if(err){
+                  console.log("error: "+err);
+                }
+                res.redirect('/dashboard')
+              })              
+            })
+        }
+    }
+
+
+
+    // res.send('/dashbaord')
     //convert input into variables
-    var rawTicker = req.body.ticker
-    var ticker = rawTicker.toLowerCase()
-    var price = parseFloat(req.body.price)
-    var shares = parseInt(req.body.shares)
-    var customerid = req.session.customerid
+    // var rawTicker = req.body.ticker
+    // var ticker = rawTicker.toLowerCase()
+    // var price = parseFloat(req.body.price)
+    // var shares = parseInt(req.body.shares)
+    // var customerid = req.session.customerid
   
-    const params = [customerid,ticker,price,shares];
-    console.log(params);
-    const sql = "INSERT INTO purchase VALUES(DEFAULT,$1::int,$2::text,$3::numeric,$4::int)";
-    pool.query(sql,params,function(err,result){
-      if(err){
-        console.log("error: "+err);
-      }
-      res.redirect('/dashboard')
-    })
+    // const params = [customerid,ticker,price,shares];
+    // console.log(params);
+    // const sql = "INSERT INTO purchase VALUES(DEFAULT,$1::int,$2::text,$3::numeric,$4::int)";
+    // pool.query(sql,params,function(err,result){
+    //   if(err){
+    //     console.log("error: "+err);
+    //   }
+    //   res.redirect('/dashboard')
+    // })
   
     }
